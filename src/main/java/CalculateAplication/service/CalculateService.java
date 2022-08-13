@@ -3,18 +3,25 @@ package CalculateAplication.service;
 import org.springframework.stereotype.Service;
 
 @Service
-public class CalculateService {
+public class CalculateService implements CalculateServiceInterface  {
 
-    public int plus(Integer a, Integer b) {
+    @Override
+    public int plus(int a, int b) {
         return a + b;
     }
-    public int minus(Integer a, Integer b) {
+
+    @Override
+    public int minus(int a, int b) {
         return a - b;
     }
-    public int multiply(Integer a, Integer b) {
+
+    @Override
+    public int multiply(int a, int b) {
         return a * b;
     }
-    public double divide(Integer a, Integer b){
-    return a / b;
+
+    @Override
+    public double divide(int a, int b) {
+        return (double) a / b ;
     }
 }

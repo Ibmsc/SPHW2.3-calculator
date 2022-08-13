@@ -1,6 +1,7 @@
 package CalculateAplication.controller;
 
 import CalculateAplication.service.CalculateService;
+import CalculateAplication.service.CalculateServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,10 +13,10 @@ import org.springframework.web.bind.annotation.RestController;
 public class CalculateController {
 
 
-    CalculateService calculateService;
+   private final CalculateServiceInterface calculateServiceInterface;
 
     public CalculateController(CalculateService calculateService) {
-        this.calculateService = calculateService;
+        this.calculateServiceInterface = calculateService;
     }
 
     @GetMapping
@@ -26,30 +27,32 @@ public class CalculateController {
     @GetMapping("/plus")
     public String plus(@RequestParam(name = "num1") Integer a,
                        @RequestParam(name = "num2") Integer b) {
-
-      int plus = calculateService.plus(a, b);
+        if( a == null || b == null)return "Одно из полей не передано";
+        int plus = calculateServiceInterface.plus(a, b);
         return a + " + " + b + "=" + plus;
     }
     @GetMapping("/minus")
     public String minus(@RequestParam(name = "num1") Integer a,
                        @RequestParam(name = "num2") Integer b) {
-
-      int result = calculateService.minus(a, b);
+        if( a == null || b == null)return "Одно из полей не передано";
+        int result = calculateServiceInterface.minus(a, b);
         return a + " - " + b + "=" + result;
     }
     @GetMapping("/multiply")
     public String multiply(@RequestParam(name = "num1") Integer a,
                        @RequestParam(name = "num2") Integer b) {
-
-      int result = calculateService.multiply(a, b);
+        if( a == null || b == null)return "Одно из полей не передано";
+        int result = calculateServiceInterface.multiply(a, b);
         return a + " * " + b + "=" + result;
     }
 
     @GetMapping("/divide")
-    public String divide(@RequestParam(name = "num1") Integer a,
-                       @RequestParam(name = "num2") Integer b) {
+    public String divide(@RequestParam(name = "num1",required = false) Integer a,
+                       @RequestParam(name = "num2",required = false) Integer b) {
+     if( a == null || b == null)return "Одно из полей не передано";
+        if( b == 0 )return "На ноль делить нельзя!";
 
-     double result = calculateService.divide(a, b);
+     double result = calculateServiceInterface.divide(a, b);
         return a + " / " + b + "=" + result;
     }
 
